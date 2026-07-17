@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "antiquated"
+dynamic = ["version"]
+description = ''
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "Greg Olmschenk", email = "greg@olmschenk.com" },
+]
+dependencies = []
+
+[project.urls]
+Documentation = "https://github.com/golmschenk/antiquated#readme"
+Issues = "https://github.com/golmschenk/antiquated/issues"
+Source = "https://github.com/golmschenk/antiquated"
+
+[tool.hatch.version]
+path = "src/antiquated/__about__.py"
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy>=1.0.0",
+]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/antiquated tests}"
+
+[tool.coverage.run]
+source_pkgs = ["antiquated", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/antiquated/__about__.py",
+]
+
+[tool.coverage.paths]
+antiquated = ["src/antiquated", "*/antiquated/src/antiquated"]
+tests = ["tests", "*/antiquated/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
