@@ -11,9 +11,11 @@ requires-python = ">=3.8"
 license = "MIT"
 keywords = []
 authors = [
-  { name = "Greg Olmschenk", email = "greg@olmschenk.com" },
+    { name = "Greg Olmschenk", email = "greg@olmschenk.com" },
 ]
-dependencies = []
+dependencies = [
+    'pytest'
+]
 
 [project.urls]
 Documentation = "https://github.com/golmschenk/antiquated#readme"
@@ -25,7 +27,7 @@ path = "src/antiquated/__about__.py"
 
 [tool.hatch.envs.types]
 extra-dependencies = [
-  "mypy>=1.0.0",
+    "mypy>=1.0.0",
 ]
 [tool.hatch.envs.types.scripts]
 check = "mypy --install-types --non-interactive {args:src/antiquated tests}"
@@ -35,7 +37,7 @@ source_pkgs = ["antiquated", "tests"]
 branch = true
 parallel = true
 omit = [
-  "src/antiquated/__about__.py",
+    "src/antiquated/__about__.py",
 ]
 
 [tool.coverage.paths]
@@ -44,7 +46,7 @@ tests = ["tests", "*/antiquated/tests"]
 
 [tool.coverage.report]
 exclude_lines = [
-  "no cov",
-  "if __name__ == .__main__.:",
-  "if TYPE_CHECKING:",
+    "no cov",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
 ]
