@@ -3,7 +3,7 @@ import tempfile
 
 import pytest
 
-from antiquated.internal.file_comparison import verify_file_matches_expected_file, IteratorPatterns
+from antiquated.internal.comparison import verify_file_matches_expected_file, IteratorPatterns
 
 
 def test_file_comparison_passes_with_matching_values():

@@ -65,3 +65,41 @@ def verify_file_matches_expected_file(
                     on line {line_number}, the string {expected_string} was expected and the actual was {actual_string}.  
                 '''
                 continue
+
+
+def verify_directories_match(
+        actual_directory: Path,
+        expected_directory: Path,
+        number_relative_tolerance: float = 0.001,
+        iterator_pattern: str = IteratorPatterns.WHITE_SPACE_VS_OTHER,
+) -> None:
+    """
+    Compares two directories to make sure their contents match. Checks that the list of files matches, and then
+    checks the file contents using `verify_file_matches_expected_file`. Expected to be run from a pytest test.
+
+    :param actual_directory: The directory under test.
+    :param expected_directory: The expected version of the directory.
+    :param number_relative_tolerance: The relative tolerance of the float values in the files.
+    :param iterator_pattern: The pattern to iterate elements over in the file. See `verify_file_matches_expected_file`
+                             for more details.
+    """
+    expected_path_list = list(expected_directory.glob('*'))
+    actual_path_list = list(actual_directory.glob('*'))
+    verify_file_lists_match(actual_path_list, expected_path_list)
+    for expected_file_path in expected_path_list:
+        actual_file_path = actual_directory.joinpath(expected_file_path.name)
+        verify_file_matches_expected_file(
+            actual_file_path=actual_file_path,
+            expected_file_path=expected_file_path,
+            number_relative_tolerance=number_relative_tolerance,
+            iterator_pattern=iterator_pattern)
+
+
+def verify_file_lists_match(actual_path_list, expected_path_list) -> None:
+    """
+    Compares two lists of files. Expected to be used from pytest.
+
+    :param actual_path_list: The list of files under test.
+    :param expected_path_list: The expected list of files.
+    """
+    assert set([path.name for path in actual_path_list]) == set([path.name for path in expected_path_list])
